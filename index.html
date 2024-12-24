@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cline Vision Test</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: monospace;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+        .test-title {
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .font-test {
+            margin: 10px 0;
+            background: white;
+            padding: 10px;
+        }
+        .line-test {
+            display: inline-block;
+            margin: 5px;
+            border: 1px solid #eee;
+            background: white;
+        }
+        .gradient-test {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Font Size Tests -->
+    <div class="test-section">
+        <div class="test-title">Font Size Tests</div>
+        <div class="font-test" style="font-size: 12px">
+            12px Font: ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789
+        </div>
+        <div class="font-test" style="font-size: 10px">
+            10px Font: ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789
+        </div>
+        <div class="font-test" style="font-size: 8px">
+            8px Font: ABCDEFGHIJKLMNOPQRSTUVWXYZ 0123456789
+        </div>
+    </div>
+
+    <!-- Line Tests -->
+    <div class="test-section">
+        <div class="test-title">1px Line Tests (0° to 45° in 1° increments)</div>
+        <div id="line-tests"></div>
+    </div>
+
+    <!-- Gradient Tests -->
+    <div class="test-section">
+        <div class="test-title">Gradient Tests</div>
+        <div class="gradient-test" style="background: linear-gradient(to right, #000, #fff)">
+        </div>
+        <div class="gradient-test" style="background: linear-gradient(45deg, #000, #fff)">
+        </div>
+        <div class="gradient-test" style="background: linear-gradient(90deg, #000, #fff)">
+        </div>
+    </div>
+
+    <script>
+        // Generate line tests
+        const lineTests = document.getElementById('line-tests');
+        for (let angle = 0; angle <= 45; angle++) {
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("width", "100");
+            svg.setAttribute("height", "100");
+            svg.setAttribute("class", "line-test");
+            
+            // Calculate end point based on angle
+            const radians = angle * Math.PI / 180;
+            const x2 = 50 + Math.cos(radians) * 50;
+            const y2 = 50 - Math.sin(radians) * 50;
+            
+            const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+            line.setAttribute("x1", "50");
+            line.setAttribute("y1", "50");
+            line.setAttribute("x2", x2);
+            line.setAttribute("y2", y2);
+            line.setAttribute("stroke", "black");
+            line.setAttribute("stroke-width", "1");
+            
+            svg.appendChild(line);
+            
+            // Add angle label
+            const text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+            text.setAttribute("x", "5");
+            text.setAttribute("y", "95");
+            text.setAttribute("font-size", "10");
+            text.textContent = `${angle}°`;
+            svg.appendChild(text);
+            
+            lineTests.appendChild(svg);
+        }
+    </script>
+</body>
+</html>
